@@ -44,6 +44,64 @@
           "id": "polyNumber",
           "label": "Number of Polygons",
           "defaultValue": "max"
+        },
+        {
+          "type": "SELECT_SINGLE",
+          "id": "tooltipThousandsSep",
+          "label": "Thousands separator",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "None",
+              "value": ""
+            },
+            {
+              "label": "Dot",
+              "value": "."
+            },
+            {
+              "label": "Comma",
+              "value": ","
+            }
+          ]
+        },
+        {
+          "type": "SELECT_SINGLE",
+          "id": "tooltipDecimalSep",
+          "label": "Decimal separator",
+          "defaultValue": ".",
+          "options": [
+            {
+              "label": "None",
+              "value": ""
+            },
+            {
+              "label": "Dot",
+              "value": "."
+            },
+            {
+              "label": "Comma",
+              "value": ","
+            }
+          ]
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "tooltipDecimals",
+          "label": "Digit after decimal separator",
+          "defaultValue": "2"
+        },
+        {
+          "type": "TEXTINPUT",
+          "id": "tooltipPrependText",
+          "label": "Text to prepend to the number",
+          "defaultValue": ""
+        }
+        {
+          "type": "TEXTINPUT",
+          "id": "tooltipAppendText",
+          "label": "Text to append to the number",
+          "defaultValue": ""
         }
       ]
     },

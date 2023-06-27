@@ -17729,6 +17729,46 @@ const drawViz = data => {
     var width = dscc.getWidth();
     var height = dscc.getHeight();
 
+    // --- CLD ---
+
+    const numfmt_tooltipThousandsSep =  data.style.tooltipThousandsSep.value
+      ? data.style.tooltipThousandsSep.value
+      : data.style.tooltipThousandsSep.defaultValue;
+
+    const numfmt_tooltipDecimalSep =  data.style.tooltipDecimalSep.value
+      ? data.style.tooltipDecimalSep.value
+      : data.style.tooltipDecimalSep.defaultValue;
+
+    const numfmt_tooltipDecimals =  data.style.tooltipDecimals.value
+      ? data.style.tooltipDecimals.value
+      : data.style.tooltipDecimals.defaultValue;
+
+    const numfmt_tooltipPrependText =  data.style.tooltipPrependText.value
+      ? data.style.tooltipPrependText.value
+      : data.style.tooltipPrependText.defaultValue;
+
+    const numfmt_tooltipAppendText =  data.style.tooltipAppendText.value
+      ? data.style.tooltipAppendText.value
+      : data.style.tooltipAppendText.defaultValue;
+
+    function tooltipFormatNumber(val) {
+      const prec = numfmt_tooltipDecimals,
+            dsep = numfmt_tooltipDecimalSep,
+            tsep = numfmt_tooltipThousandsSep,
+            parts = (val || 0).toFixed(prec).split(".");
+      var num = "";
+      if (tsep && parts[0].length > 3) {
+        num = parts[0].substr(0, parts[0].length % 3);
+        for (var i = num.length; i < parts[0].length; i += 3)
+          num += tsep + parts[0].substr(i, i + 3);
+      } else num = parts[0];
+      if (prec && dsep)
+        num = (num || 0) + dsep + parts[1];
+      return numfmt_tooltipPrependText + num + numfmt_tooltipAppendText;
+    }
+
+    // --- CLD ---
+
     // Create boundary geoJSON object if user specifies they want to plot one in STYLE
     if (boundaryGeoJSON != "Add boundary geojson here"){
 
@@ -17943,7 +17983,7 @@ const drawViz = data => {
               .attr("class", "d3-tip")
               .style("position", "absolute")
               .style("overflow", "visible")
-              .html(d => d.properties.met === null ? d.tooltip + ': null' : d.tooltip + ': ' + Number.parseFloat(d.properties.met).toFixed(legendDecimalPlaces));
+              .html(d => d.properties.met === null ? d.tooltip + ': null' : d.tooltip + ': ' + tooltipFormatNumber(Number.parseFloat(d.properties.met).toFixed(legendDecimalPlaces)));
               svg.call(tool_tip);
         }
 
